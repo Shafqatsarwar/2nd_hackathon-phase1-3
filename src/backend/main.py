@@ -58,16 +58,25 @@ def create_task(
     if user_id != token_user_id:
         raise HTTPException(status_code=403, detail="Not authorized to create tasks for this user")
 
-    db_user = session.get(User, user_id)
-    if not db_user:
-        db_user = User(id=user_id, email=f"{user_id}@example.com")
-        session.add(db_user)
-    
-    db_task = Task.model_validate(task, update={"user_id": user_id})
-    session.add(db_task)
-    session.commit()
-    session.refresh(db_task)
-    return db_task
+    try:
+        db_user = session.get(User, user_id)
+        if not db_user:
+            db_user = User(id=user_id, email=f"{user_id}@example.com")
+            session.add(db_user)
+        
+        db_task = Task.model_validate(task, update={"user_id": user_id})
+        session.add(db_task)
+        session.commit()
+        session.refresh(db_task)
+        return db_task
+    except Exception as e:
+        session.rollback()
+        # Detailed error for debugging Phase II
+        print(f"ERROR creating task: {e}")
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Backend Error: {type(e).__name__}: {str(e)}"
+        )
 
 @app.get("/api/{user_id}/tasks/{id}", response_model=Task)
 def get_task(
@@ -147,8 +156,13 @@ def delete_task(
     return {"ok": True}
 
 @app.get("/health")
-def health_check():
-    return {"status": "healthy"}
+def health_check(session: Session = Depends(get_session)):
+    try:
+        # Check DB connection
+        session.exec(select(1)).first()
+        return {"status": "healthy", "database": "connected"}
+    except Exception as e:
+        return {"status": "unhealthy", "database": str(e)}
 
 # --- AGENT ENDPOINTS (PHASE III) ---
 from src.backend.agents.orchestrator import orchestrator

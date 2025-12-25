@@ -2,9 +2,18 @@
 
 import { useState, useEffect } from "react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || (typeof window !== 'undefined'
-    ? `http://${window.location.hostname}:800`
-    : "http://127.0.0.1:800");
+const getBackendUrl = () => {
+    let url = process.env.NEXT_PUBLIC_BACKEND_URL ||
+        process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL ||
+        (typeof window !== 'undefined'
+            ? `http://${window.location.hostname}:800`
+            : "http://127.0.0.1:800");
+
+    // Remove trailing slash and /api suffix to normalize
+    return url.replace(/\/$/, "").replace(/\/api$/, "");
+};
+
+const BACKEND_URL = getBackendUrl();
 
 interface TaskInterfaceProps {
     userId: string;

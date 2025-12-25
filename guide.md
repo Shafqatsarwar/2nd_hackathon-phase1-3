@@ -22,11 +22,35 @@ uv run uvicorn main:app --host 0.0.0.0 --port 800 --reload
 ### 2. Start the Frontend (The Interface)
 The frontend provides the premium user experience.
 ```powershell
-cd src/frontend
+# From project root
 npm run dev
 ```
 *   **App**: Open `http://localhost:3000`
-*   **Note**: The app automatically connects to the backend on port 800.
+*   **Note**: The root `npm run dev` now automatically starts the frontend from its subdirectory. It connects to the backend on port 800.
+
+---
+### 3. 🔐 Master Admin Access (Bypass Login)
+For development and demonstration purposes, we have a built-in Master Admin Access.
+
+*   **Master Token**: `admin_token`
+*   **How to use (Frontend UI)**:
+    1.  Go to the `/dashboard` directly or via the "Start the Evolution" button.
+    2.  If prompted with a login, you can use the **special admin login** (if implemented in your local UI) or bypass by setting `admin_access=true` in your browser's LocalStorage.
+*   **How to use (API/Swagger)**:
+    1.  Go to `https://your-app.vercel.app/docs`.
+    2.  Click **Authorize**.
+    3.  Enter `admin_token` in the value field.
+    4.  Now all `/api/{user_id}/...` requests will treat you as the `admin` user regardless of the `user_id` provided.
+*   **Security Note**: This is enabled for the Hackathon Phase II to facilitate easy judging. In a real production app, this would be removed.
+
+---
+
+### 4. � Contribution & CLI
+Legacy Phase I CLI tools are preserved in `src/cli`.
+To run the original CLI:
+```powershell
+uv run python src/cli/main.py
+```
 
 ---
 
@@ -236,22 +260,7 @@ npm start
 - Verify `sslmode=require` is in the connection string
 - Check Neon database is not paused/suspended
 
-### 🔐 API Testing (Admin Token)
-When testing the Backend via Swagger (`/docs`) or cURL, you can bypass login using the Master Admin Token.
-*   **Token Value**: `admin_token`
-*   **Usage**: In the "Authorize" box, type: `admin_token` (or `Bearer admin_token` in headers).
-*   **Effect**: Grants immediate access as the `admin` user.
 
----
-
-## � Contribution & CLI
-Legacy Phase I CLI tools are preserved in `src/cli`.
-To run the original CLI:
-```powershell
-uv run python src/cli/main.py
-```
-
----
 
 ## 🏛️ Architecture & Standards
 This project follows strict **Agentic Development** principles.

@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 # Load local .env if it exists
 load_dotenv()
 
-BACKEND_URL = "http://127.0.0.1:8000"
+BACKEND_URL = "http://127.0.0.1:800"
 SECRET = os.getenv("BETTER_AUTH_SECRET", "default_secret_change_me")
 USER_ID = "test-user-999"
 
