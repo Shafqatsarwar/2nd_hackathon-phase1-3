@@ -141,9 +141,18 @@ openssl rand -base64 32
    - Click **"Environment Variables"** in the left sidebar
 
 3. **Add Variable #1: DATABASE_URL**
+   
+   > [!CAUTION]
+   > **CRITICAL: CLEAN YOUR VALUES BEFORE PASTING**
+   > Vercel takes everything you paste **literally**. 
+   > - ❌ **NO `psql` prefix**: Do not include the word `psql` or the space after it.
+   > - ❌ **NO QUOTES**: Do not include `'` single quotes or `"` double quotes.
+   > - ❌ **NO BACKTICKS**: Do not include `` ` `` backticks.
+   > - ✅ **CORRECT**: Start directly with `postgresql://...`
+   
    - Click **"Add New"** button
    - **Name**: `DATABASE_URL`
-   - **Value**: Paste your Neon connection string from Step 1
+   - **Value**: Paste your Neon connection string (clean, no quotes!)
    - **Environment**: Check all three boxes:
      - ✅ Production
      - ✅ Preview
