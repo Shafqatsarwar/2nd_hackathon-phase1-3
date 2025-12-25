@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 
-const BACKEND_URL = typeof window !== 'undefined'
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || (typeof window !== 'undefined'
     ? `http://${window.location.hostname}:800`
-    : "http://127.0.0.1:800";
+    : "http://127.0.0.1:800");
 
 interface TaskInterfaceProps {
     userId: string;

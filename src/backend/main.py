@@ -1,10 +1,19 @@
+import sys
+import os
+from pathlib import Path
+
+# Add project root to sys.path to support both Vercel and local runs
+root = Path(__file__).parent.parent.parent
+if str(root) not in sys.path:
+    sys.path.append(str(root))
+
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, select
 from typing import List
-from .database import create_db_and_tables, get_session
-from .models import Task, TaskCreate, TaskUpdate, User
-from .auth_utils import verify_jwt
+from src.backend.database import create_db_and_tables, get_session
+from src.backend.models import Task, TaskCreate, TaskUpdate, User
+from src.backend.auth_utils import verify_jwt
 
 app = FastAPI(title="The Evolution of Todo - Phase II")
 
@@ -142,7 +151,7 @@ def health_check():
     return {"status": "healthy"}
 
 # --- AGENT ENDPOINTS (PHASE III) ---
-from agents.orchestrator import orchestrator
+from src.backend.agents.orchestrator import orchestrator
 from pydantic import BaseModel
 
 class AgentRequest(BaseModel):

@@ -1,17 +1,23 @@
 {
-    "version": 2,
-    "rewrites": [
-        {
-            "source": "/api/(.*)",
-            "destination": "/api/index.py"
-        },
-        {
-            "source": "/docs",
-            "destination": "/api/index.py"
-        },
-        {
-            "source": "/openapi.json",
-            "destination": "/api/index.py"
-        }
-    ]
+  "version": 2,
+  "framework": "nextjs",
+  "buildCommand": "npm --prefix src/frontend install && npm --prefix src/frontend run build",
+  "outputDirectory": "src/frontend/.next",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/docs",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/openapi.json",
+      "destination": "/api/index.py"
+    }
+  ],
+  "env": {
+    "PYTHONPATH": "."
+  }
 }

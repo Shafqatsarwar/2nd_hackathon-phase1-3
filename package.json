@@ -1,0 +1,16 @@
+{
+  "name": "2nd-hackathon-shafqat",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npm --prefix src/frontend run dev",
+    "build": "npm --prefix src/frontend run build",
+    "start": "npm --prefix src/frontend run start",
+    "lint": "npm --prefix src/frontend run lint"
+  },
+  "dependencies": {
+    "next": "^15.1.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {}
+}

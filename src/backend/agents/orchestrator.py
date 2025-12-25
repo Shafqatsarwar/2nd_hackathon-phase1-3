@@ -1,4 +1,4 @@
-from .subagents.task_agent import TaskAgent
+from src.backend.agents.subagents.task_agent import TaskAgent
 
 class AgentOrchestrator:
     """

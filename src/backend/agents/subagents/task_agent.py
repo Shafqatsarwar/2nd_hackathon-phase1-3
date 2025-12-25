@@ -1,4 +1,4 @@
-from ..skills.analysis import analyze_sentiment, suggest_tags
+from src.backend.agents.skills.analysis import analyze_sentiment, suggest_tags
 
 class TaskAgent:
     """A specialized subagent for Task Management."""

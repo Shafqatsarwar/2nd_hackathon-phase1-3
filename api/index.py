@@ -4,7 +4,8 @@ from pathlib import Path
 
 # Add the project root to sys.path
 root = Path(__file__).parent.parent
-sys.path.append(str(root))
+if str(root) not in sys.path:
+    sys.path.append(str(root))
 
 from src.backend.main import app
 
