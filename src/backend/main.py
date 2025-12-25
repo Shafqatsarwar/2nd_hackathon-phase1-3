@@ -2,9 +2,9 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, select
 from typing import List
-from database import create_db_and_tables, get_session
-from models import Task, TaskCreate, TaskUpdate, User
-from auth_utils import verify_jwt
+from .database import create_db_and_tables, get_session
+from .models import Task, TaskCreate, TaskUpdate, User
+from .auth_utils import verify_jwt
 
 app = FastAPI(title="The Evolution of Todo - Phase II")
 
