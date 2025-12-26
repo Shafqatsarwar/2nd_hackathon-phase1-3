@@ -2,23 +2,14 @@
 
 import { useState, useEffect } from "react";
 
-const getBackendUrl = () => {
-    // 1. Check for manual override from env
-    if (process.env.NEXT_PUBLIC_BACKEND_URL) return process.env.NEXT_PUBLIC_BACKEND_URL.replace(/\/$/, "").replace(/\/api$/, "");
-    if (process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL) return process.env.NEXT_PUBLIC_LOCAL_BACKEND_URL.replace(/\/$/, "").replace(/\/api$/, "");
+import { fetcher } from "../utils/fetcher";
 
-    // 2. Auto-detect based on environment
-    if (typeof window !== 'undefined') {
-        const isVercel = window.location.hostname.includes("vercel.app");
-        // In Vercel, we use the relative path /api handled by vercel.json rewrites
-        if (isVercel) return "";
-        return `http://${window.location.hostname}:8000`;
-    }
-
-    return "http://127.0.0.1:8000";
-};
-
-const BACKEND_URL = getBackendUrl();
+interface Task {
+    id: number;
+    title: string;
+    completed: boolean;
+    user_id: string;
+}
 
 interface TaskInterfaceProps {
     userId: string;
@@ -27,7 +18,7 @@ interface TaskInterfaceProps {
 }
 
 export default function TaskInterface({ userId, token, title = "Evolution Task Matrix" }: TaskInterfaceProps) {
-    const [tasks, setTasks] = useState<any[]>([]);
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [newTitle, setNewTitle] = useState("");
     const [loading, setLoading] = useState(true);
 
@@ -37,18 +28,10 @@ export default function TaskInterface({ userId, token, title = "Evolution Task M
 
     const fetchTasks = async () => {
         try {
-            const url = `${BACKEND_URL}/api/${userId}/tasks`;
+            const url = `/api/${userId}/tasks`;
             console.log("Fetching tasks from:", url); // Diagnostic
-            const res = await fetch(url, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setTasks(data);
-            }
+            const data = await fetcher(url, token);
+            setTasks(data);
         } catch (err) {
             console.error(err);
         } finally {
@@ -59,7 +42,7 @@ export default function TaskInterface({ userId, token, title = "Evolution Task M
     const addTask = async () => {
         if (!newTitle) return;
         try {
-            const res = await fetch(`${BACKEND_URL}/api/${userId}/tasks`, {
+            const res = await fetch(`/api/${userId}/tasks`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -79,7 +62,7 @@ export default function TaskInterface({ userId, token, title = "Evolution Task M
 
     const toggleTask = async (id: number) => {
         try {
-            const res = await fetch(`${BACKEND_URL}/api/${userId}/tasks/${id}/complete`, {
+            const res = await fetch(`/api/${userId}/tasks/${id}/complete`, {
                 method: "PATCH",
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -94,7 +77,7 @@ export default function TaskInterface({ userId, token, title = "Evolution Task M
 
     const deleteTask = async (id: number) => {
         try {
-            const res = await fetch(`${BACKEND_URL}/api/${userId}/tasks/${id}`, {
+            const res = await fetch(`/api/${userId}/tasks/${id}`, {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -105,6 +88,7 @@ export default function TaskInterface({ userId, token, title = "Evolution Task M
             console.error(err);
         }
     };
+
 
     if (loading) return <div className="text-slate-500 py-10 text-center animate-pulse">Scanning matrix...</div>;
 
