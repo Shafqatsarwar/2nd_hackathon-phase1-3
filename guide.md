@@ -50,6 +50,8 @@ Legacy Phase I CLI tools are preserved in `src/cli`.
 To run the original CLI:
 ```powershell
 uv run python src/cli/main.py
+# cd src/cli
+# uv run main.py
 ```
 
 ---

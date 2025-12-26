@@ -11,7 +11,7 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, select
 from typing import List
-from src.backend.database import create_db_and_tables, get_session
+from src.backend.database import create_db_and_tables, get_session, engine
 from src.backend.models import Task, TaskCreate, TaskUpdate, User
 from src.backend.auth_utils import verify_jwt
 

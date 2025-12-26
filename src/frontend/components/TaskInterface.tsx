@@ -12,10 +12,10 @@ const getBackendUrl = () => {
         const isVercel = window.location.hostname.includes("vercel.app");
         // In Vercel, we use the relative path /api handled by vercel.json rewrites
         if (isVercel) return "";
-        return `http://${window.location.hostname}:800`;
+        return `http://${window.location.hostname}:8000`;
     }
 
-    return "http://127.0.0.1:800";
+    return "http://127.0.0.1:8000";
 };
 
 const BACKEND_URL = getBackendUrl();

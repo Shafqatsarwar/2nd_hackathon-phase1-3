@@ -19,19 +19,27 @@ const getDatabaseConfig = () => {
         };
     }
 
-    const url = process.env.DATABASE_URL;
-    console.log("📡 Auth: Using database connection");
+    const url = process.env.DATABASE_URL || "sqlite://todo.db"; // Default to local sqlite
+    console.log("📡 Auth Configuration Check:");
+    console.log("   - DATABASE_URL:", url);
 
     if (url.startsWith("postgres")) {
         return {
-            provider: "postgresql",
+            provider: "postgres",
             url: url,
         };
     }
 
+    const path = require("path");
+    // Ensure we are looking for todo.db in the frontend root or project root
+    const dbFileName = url.replace("sqlite://", "").replace("sqlite:", "");
+    const absolutePath = path.resolve(process.cwd(), dbFileName);
+
+    console.log("   - SQLite Absolute Path:", absolutePath);
+
     return {
         provider: "sqlite",
-        url: url.replace("sqlite:///", ""),
+        url: absolutePath,
     };
 };
 
