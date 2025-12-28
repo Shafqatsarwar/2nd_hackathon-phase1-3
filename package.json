@@ -11,10 +11,7 @@
     "start": "npm run start --workspace=src/frontend",
     "lint": "npm run lint --workspace=src/frontend"
   },
-  "dependencies": {
-    "better-auth": "1.4.9",
-    "next": "^15.5.9",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

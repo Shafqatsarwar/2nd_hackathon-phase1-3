@@ -1,0 +1,26 @@
+{
+  "claude_code": {
+    "project_type": "fullstack-auth-app",
+    "integrations": [
+      "better-auth",
+      "mcp"
+    ],
+    "context_paths": [
+      "src/frontend/auth_v3.ts",
+      "src/frontend/app/api/auth/[...better-auth]/route.ts",
+      "src/backend/auth_utils.py",
+      "src/backend/main.py",
+      ".env",
+      "src/frontend/.env.local",
+      "src/backend/.env.backend"
+    ],
+    "mcp_config": ".claude/mcp-config.json",
+    "project_config": ".claude/project-config.json",
+    "hooks": {
+      "on_file_change": [
+        "validate_auth_config",
+        "check_env_alignment"
+      ]
+    }
+  }
+}

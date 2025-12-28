@@ -1,8 +1,4 @@
-# ==========================================
-# Python
-# ==========================================
 
-# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -100,7 +96,7 @@ celerybeat.pid
 .env
 .env.local
 .env.vercel
-.env.*.local
+!.env.example
 venv/
 ENV/
 env/
@@ -130,15 +126,8 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# ==========================================
-# UV (Python Package Manager)
-# ==========================================
 .uv/
 uv.lock
-
-# ==========================================
-# Node.js / npm
-# ==========================================
 
 # Dependencies
 node_modules/
@@ -200,19 +189,11 @@ public
 .yarn/install-state.gz
 .pnp.*
 
-# ==========================================
-# Database
-# ==========================================
-
 # SQLite databases
 *.db
 *.sqlite
 *.sqlite3
 todo.db
-
-# ==========================================
-# IDEs and Editors
-# ==========================================
 
 # Visual Studio Code
 .vscode/
@@ -237,10 +218,6 @@ todo.db
 *~
 \#*\#
 .\#*
-
-# ==========================================
-# Operating System
-# ==========================================
 
 # macOS
 .DS_Store
@@ -283,10 +260,6 @@ $RECYCLE.BIN/
 .Trash-*
 .nfs*
 
-# ==========================================
-# Logs and temporary files
-# ==========================================
-
 # Log files
 *.log
 logs/
@@ -295,63 +268,21 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-
-# Runtime data
 pids
 *.pid
 *.seed
 *.pid.lock
-
-# ==========================================
-# Build outputs
-# ==========================================
-
-# TypeScript
 *.tsbuildinfo
 
-# Production builds
 build/
 dist/
-
-# ==========================================
-# Vercel
-# ==========================================
 .vercel
-
-# ==========================================
-# Testing
-# ==========================================
 coverage/
 *.lcov
-
-# ==========================================
-# Misc
-# ==========================================
-
-# Temporary files
 *.tmp
 *.temp
 .tmp/
 .temp/
-
-# Lock files (optional - uncomment if needed)
-# package-lock.json
-# yarn.lock
-# pnpm-lock.yaml
-
-# ==========================================
-# Project Specific
-# ==========================================
-
-# Better Auth database (if using SQLite for auth)
 auth.db
-
-# Uploaded files / user content
 uploads/
 media/
-
-# ==========================================
-# IMPORTANT: Environment files are now IGNORED
-# ==========================================
-# Secret files (.env.local, .env.vercel) are now hidden from Git
-# Use .env.example files as templates for other developers

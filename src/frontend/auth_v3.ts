@@ -9,6 +9,8 @@ const getDatabaseConfig = () => {
         process.env.CI === 'true' ||
         process.env.VERCEL === '1' ||
         process.env.BUILD_ID !== undefined ||
+        process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview' ||
+        process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ||
         (!process.env.DATABASE_URL && process.env.NODE_ENV === 'production');
 
     if (isBuild || !process.env.DATABASE_URL) {
