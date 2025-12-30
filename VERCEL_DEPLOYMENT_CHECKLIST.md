@@ -13,7 +13,7 @@
 ### 2. Environment Variables
 - [x] `BETTER_AUTH_SECRET` - Shared secret for JWT
 - [x] `DATABASE_URL` - PostgreSQL connection string (Neon DB)
-- [x] `NEXT_PUBLIC_BACKEND_URL` - Backend API URL
+- [x] `NEXT_PUBLIC_BACKEND_URL` - Backend API host (`/api` appended automatically)
 - [x] `NEXT_PUBLIC_BETTER_AUTH_URL` - Auth URL
 
 ### 3. API Endpoints
@@ -85,7 +85,7 @@
 ```
 DATABASE_URL=postgresql://user:pass@ep-host.region.aws.neon.tech/dbname?sslmode=require
 BETTER_AUTH_SECRET=your_32_plus_character_random_string
-NEXT_PUBLIC_BACKEND_URL=https://your-app-name.vercel.app/api
+NEXT_PUBLIC_BACKEND_URL=https://your-app-name.vercel.app
 NEXT_PUBLIC_BETTER_AUTH_URL=https://your-app-name.vercel.app
 ```
 

@@ -107,7 +107,7 @@ See [VERCEL_DEPLOYMENT_CHECKLIST.md](./VERCEL_DEPLOYMENT_CHECKLIST.md) for a com
 3. **Set Environment Variables**:
    - `DATABASE_URL`: Neon PostgreSQL connection string
    - `BETTER_AUTH_SECRET`: 32+ character random string
-   - `NEXT_PUBLIC_BACKEND_URL`: `https://your-app.vercel.app/api`
+   - `NEXT_PUBLIC_BACKEND_URL`: `https://your-app.vercel.app` (rewrites add `/api`, so including `/api` is optional)
    - `NEXT_PUBLIC_BETTER_AUTH_URL`: `https://your-app.vercel.app`
 
 4. **Verify Deployment**:

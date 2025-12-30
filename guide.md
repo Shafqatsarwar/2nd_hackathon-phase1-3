@@ -80,8 +80,8 @@ This section explains every key you need, why you need it, and where to get it.
 
 ### 3. `NEXT_PUBLIC_BACKEND_URL` (The Bridge)
 *   **What it is**: Tells the Frontend where the Backend lives.
-*   **Local**: `http://127.0.0.1:800`
-*   **Vercel**: `https://your-app-name.vercel.app/api` (If using Unified Deployment).
+*   **Local**: `http://127.0.0.1:800` (uvicorn runs here and rewrites append `/api` automatically).
+*   **Vercel**: `https://your-app-name.vercel.app` (rewrites append `/api`; including `/api` in the variable is optional).
 
 ### 4. `NEXT_PUBLIC_BETTER_AUTH_URL` (The Home)
 *   **What it is**: The URL of your website itself.
@@ -104,7 +104,7 @@ NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
 ```env
 DATABASE_URL="postgresql://neondb_owner:..." (From Neon)
 BETTER_AUTH_SECRET="complex_random_string"
-NEXT_PUBLIC_BACKEND_URL="https://your-app.vercel.app/api"
+NEXT_PUBLIC_BACKEND_URL="https://your-app.vercel.app"
 NEXT_PUBLIC_BETTER_AUTH_URL="https://your-app.vercel.app"
 ```
 
@@ -166,14 +166,14 @@ Add these in your Vercel project settings:
 ```env
 DATABASE_URL=postgresql://neondb_owner:xxxxx@ep-xxxxx.region.aws.neon.tech/neondb?sslmode=require
 BETTER_AUTH_SECRET=your_complex_random_string_here
-NEXT_PUBLIC_BACKEND_URL=https://your-app-name.vercel.app/api
+NEXT_PUBLIC_BACKEND_URL=https://your-app-name.vercel.app
 NEXT_PUBLIC_BETTER_AUTH_URL=https://your-app-name.vercel.app
 ```
 
 > [!IMPORTANT]
 > - `DATABASE_URL`: Get from [Neon Console](https://console.neon.tech) (use Pooled connection string)
 > - `BETTER_AUTH_SECRET`: Generate with `openssl rand -base64 32`
-> - `NEXT_PUBLIC_BACKEND_URL`: Your Vercel URL + `/api`
+> - `NEXT_PUBLIC_BACKEND_URL`: Your Vercel URL (rewrites add `/api`, so including `/api` is optional)
 > - `NEXT_PUBLIC_BETTER_AUTH_URL`: Your Vercel URL
 
 ### 🚀 Deployment Steps
@@ -254,7 +254,7 @@ npm start
 
 **API Routes Not Working**:
 - Verify `vercel.json` rewrites are configured correctly
-- Check that `NEXT_PUBLIC_BACKEND_URL` points to `/api`
+- Ensure `NEXT_PUBLIC_BACKEND_URL` matches your app host (rewrites add `/api`; including `/api` is still accepted)
 - Review Vercel function logs in dashboard
 
 **Database Connection Issues**:

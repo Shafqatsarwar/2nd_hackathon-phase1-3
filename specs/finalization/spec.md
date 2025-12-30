@@ -16,7 +16,7 @@ This specification covers the final steps required to transition "The Evolution 
     - `DATABASE_URL`: Connection string for Neon PostgreSQL.
     - `BETTER_AUTH_SECRET`: Secret for JWT signing.
 - **Frontend (`.env.local`)**:
-    - `NEXT_PUBLIC_BACKEND_URL`: URL of the deployed FastAPI service.
+    - `NEXT_PUBLIC_BACKEND_URL`: Public URL of your Vercel deployment (rewrites add `/api`, so including `/api` is optional).
     - `BETTER_AUTH_URL`: Canonical URL of the frontend (for Auth redirects).
 
 ### 3.2 Security

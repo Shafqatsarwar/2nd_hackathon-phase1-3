@@ -169,10 +169,10 @@ openssl rand -base64 32
 5. **Add Variable #3: NEXT_PUBLIC_BACKEND_URL**
    - Click **"Add New"** button
    - **Name**: `NEXT_PUBLIC_BACKEND_URL`
-   - **Value**: `https://YOUR-APP-NAME.vercel.app/api`
+   - **Value**: `https://YOUR-APP-NAME.vercel.app`
    - Replace `YOUR-APP-NAME` with your actual Vercel URL
-   - Example: `https://2nd-hackathon-shafqat.vercel.app/api`
-   - **IMPORTANT**: Must end with `/api`
+   - Example: `https://2nd-hackathon-shafqat.vercel.app`
+   - **Note**: Rewrites append `/api` automatically; you may still include `/api` if you prefer
    - **Environment**: Check all three boxes
    - Click **"Save"**
 
@@ -318,9 +318,9 @@ After deployment, test these endpoints:
 **Cause**: Wrong `NEXT_PUBLIC_BACKEND_URL`
 
 **Solution**:
-1. Check `NEXT_PUBLIC_BACKEND_URL` ends with `/api`
+1. Ensure `NEXT_PUBLIC_BACKEND_URL` points to your Vercel host (rewrites append `/api` automatically)
 2. Verify it matches your Vercel URL exactly
-3. Example: `https://2nd-hackathon-shafqat.vercel.app/api`
+3. Example: `https://2nd-hackathon-shafqat.vercel.app`
 4. Redeploy after fixing
 
 ---
@@ -365,7 +365,7 @@ npm run dev
 |----------|-------------|------------------|------------|
 | `DATABASE_URL` | `sqlite:///todo.db` | Neon PostgreSQL URL | Backend + Frontend |
 | `BETTER_AUTH_SECRET` | `development_secret...` | Generated secret | Backend + Frontend |
-| `NEXT_PUBLIC_BACKEND_URL` | `http://127.0.0.1:800` | `https://your-app.vercel.app/api` | Frontend only |
+| `NEXT_PUBLIC_BACKEND_URL` | `http://127.0.0.1:800` | `https://your-app.vercel.app` (rewrites add `/api`) | Frontend only |
 | `NEXT_PUBLIC_BETTER_AUTH_URL` | `http://localhost:3000` | `https://your-app.vercel.app` | Frontend only |
 
 ---
@@ -386,9 +386,9 @@ npm run dev
 
 ### NEXT_PUBLIC_BACKEND_URL
 - **Purpose**: Tells frontend where backend API lives
-- **Local**: Points to `localhost:800`
-- **Production**: Points to Vercel `/api` route
-- **Must**: End with `/api` in production
+- **Local**: Points to `localhost:800` (rewrites append `/api`)
+- **Production**: Points to `https://your-app.vercel.app` (rewrites append `/api`; you can still include `/api` explicitly)
+- **Note**: `/api` is appended automatically, so ending with `/api` is optional in production
 
 ### NEXT_PUBLIC_BETTER_AUTH_URL
 - **Purpose**: Tells auth system where your app lives

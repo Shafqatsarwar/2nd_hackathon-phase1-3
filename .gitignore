@@ -286,3 +286,4 @@ coverage/
 auth.db
 uploads/
 media/
+.env*.local
