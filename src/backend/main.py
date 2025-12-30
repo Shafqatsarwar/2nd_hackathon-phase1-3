@@ -199,3 +199,7 @@ def consult_agent(request: AgentRequest):
     Direct interface to the Backend Agent System.
     """
     return orchestrator.delegate(request.query, request.context)
+
+# --- MCP CHAT ENDPOINT (PHASE III) ---
+from src.backend.mcp_server.chat_endpoint import router as chat_router
+app.include_router(chat_router)

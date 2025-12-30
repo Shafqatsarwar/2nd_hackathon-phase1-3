@@ -6,7 +6,11 @@
       "Bash(python -c \"import main; print\\(''Backend imports successfully''\\)\")",
       "Bash(uvicorn main:app --reload --host 0.0.0.0 --port 8000)",
       "Bash(ls -la package*.json)",
-      "Bash(python -c \"import main; print\\(''Backend imports successfully with pydantic==2.4.2''\\)\")"
+      "Bash(python -c \"import main; print\\(''Backend imports successfully with pydantic==2.4.2''\\)\")",
+      "Bash(dir /s)",
+      "Bash(dir)",
+      "Bash(tree /F)",
+      "Bash(powershell \"Get-ChildItem -Recurse | Where-Object {$_Attributes -notlike ''*Directory*''} | ForEach-Object {Write-Output $_FullName}\")"
     ]
   }
 }

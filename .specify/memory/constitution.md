@@ -82,8 +82,49 @@ Windows users MUST use WSL 2 (Ubuntu 22.04) for consistency.
 │   └── scripts/       # Automation scripts
 ├── specs/             # Feature specifications and plans
 ├── src/               # Generated source code
+├── api/               # Vercel serverless entry point
 ├── constitution.md
 ├── README.md
 ├── CLAUDE.md
-└── pyproject.toml
+├── pyproject.toml
+├── package.json       # Root Node.js configuration
+└── requirements.txt   # Root Python dependencies
 ```
+
+---
+
+## Phase III: Todo AI Chatbot
+**Objective**: Create an AI-powered chatbot interface for managing todos through natural language using MCP (Model Context Protocol) server architecture.
+
+### Requirements
+- **Features**: All 5 Basic Level features accessible via conversational interface
+- **Architecture**: MCP server with OpenAI Agents SDK, stateless chat endpoint
+- **AI Integration**: Natural language processing for task management
+- **Storage**: Conversation state persisted in Neon Serverless PostgreSQL
+- **Authentication**: User isolation using existing Better Auth JWT tokens
+
+### Technology Stack (Phase III)
+- **Frontend**: Next.js 16+ with OpenAI ChatKit
+- **Backend**: Python FastAPI + OpenAI Agents SDK + Official MCP SDK
+- **ORM**: SQLModel
+- **Database**: Neon Serverless PostgreSQL
+- **Authentication**: Better Auth (JWT-based, shared with Phase II)
+- **AI Tools**: Claude Code + Spec-Kit Plus + OpenAI API
+
+### MCP Tools for Task Operations
+- `add_task`: Create new tasks via natural language
+- `list_tasks`: Retrieve and display tasks
+- `complete_task`: Mark tasks as complete
+- `delete_task`: Remove tasks from the list
+- `update_task`: Modify existing tasks
+
+### API Endpoints (Phase III)
+- `POST /api/{user_id}/chat`: Chat interface with conversation state management
+- MCP Server endpoints for AI agent tool calls
+- Conversation history storage and retrieval endpoints
+
+### Architecture Benefits
+- **MCP Tools**: Standardized interface for AI to interact with the app
+- **Stateless Server**: Scalable, resilient, horizontally scalable
+- **Tool Composition**: Agent can chain multiple tools in one turn
+- **User Isolation**: Each user's conversations are properly isolated
