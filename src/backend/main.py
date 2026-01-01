@@ -1,5 +1,6 @@
 import sys
 import os
+import traceback
 from pathlib import Path
 
 # Add project root to sys.path to support both Vercel and local runs
@@ -127,9 +128,14 @@ def list_tasks(
 ):
     if user_id != token_user_id:
         raise HTTPException(status_code=403, detail="Not authorized to access this user's tasks")
-    
-    tasks = session.exec(select(Task).where(Task.user_id == user_id)).all()
-    return tasks
+
+    try:
+        tasks = session.exec(select(Task).where(Task.user_id == user_id)).all()
+        return tasks
+    except Exception as exc:
+        print(f"list_tasks failed for user_id={user_id} token_user_id={token_user_id}")
+        traceback.print_exc()
+        raise
 
 @app.post("/api/{user_id}/tasks", response_model=Task, status_code=status.HTTP_201_CREATED)
 def create_task(

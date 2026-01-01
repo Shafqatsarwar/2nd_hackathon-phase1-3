@@ -25,6 +25,15 @@ uv run uvicorn main:app --host 0.0.0.0 --port 800 --reload
 *   **Health Check**: Open `http://localhost:800/health` → `{"status": "healthy"}`
 *   **Docs**: Open `http://localhost:800/docs` for Swagger UI.
 
+### Tip: Quickly validate the API
+If you hit a 500 from `TaskInterface`, run this curl from project root to confirm the backend is healthy before chasing frontend issues:
+
+```powershell
+curl -H "Authorization: Bearer guest_token" http://127.0.0.1:800/api/guest_user/tasks
+```
+
+If the response returns JSON, the backend system is up and responding with the expected task list.
+
 ### 2. Start the Frontend (The Interface)
 The frontend provides the premium user experience.
 ```powershell
@@ -260,6 +269,18 @@ After deployment, test these endpoints:
 2. **Backend Health**: `https://your-app.vercel.app/api/health`
 3. **API Docs**: `https://your-app.vercel.app/docs`
 4. **OpenAPI Spec**: `https://your-app.vercel.app/openapi.json`
+
+### 🧭 Swagger Authorization Help
+When you open `/docs` (locally or on Vercel) you can authorize requests with one of the demo tokens:
+
+1. Click the `bearerAuth (http, Bearer)` entry under “Available authorizations”.
+2. In the **Value** field paste:
+   * `Bearer guest_token` – shared guest vault with read-only data.
+   * `Bearer admin_token` – impersonates `khansarwar1@hotmail.com` with full access.
+   * `Bearer <your JWT>` – any Better Auth session token exported from the frontend (must share `BETTER_AUTH_SECRET`).
+3. Press **Authorize**, then **Close**; Swagger now sends that bearer token with every `/api/{user_id}/*` request until you clear it.
+
+Use the “Try it out” buttons after authorizing to exercise the CRUD/chat endpoints, and copy the Authorization value from Swagger to make sure it matches what the UI is sending if you still see 400/401 responses.
 
 ### 🧪 Local Production Build Test
 

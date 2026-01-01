@@ -135,6 +135,26 @@ class TodoOpenAIAgent:
         response_message = response.choices[0].message
         tool_calls = response_message.tool_calls
 
+        # Append the assistant message (the one that requested tools) to the history,
+        # so that the following tool responses correctly follow a message with tool_calls.
+        assistant_message = {
+            "role": response_message.role,
+            "content": response_message.content or "",
+        }
+        if response_message.tool_calls:
+            assistant_message["tool_calls"] = [
+                {
+                    "id": tool_call.id,
+                    "type": getattr(tool_call, "type", "function_call"),
+                    "function": {
+                        "name": tool_call.function.name,
+                        "arguments": tool_call.function.arguments,
+                    },
+                }
+                for tool_call in response_message.tool_calls
+            ]
+        messages.append(assistant_message)
+
         if tool_calls:
             # Process tool calls
             tool_results = []
@@ -179,8 +199,10 @@ class TodoOpenAIAgent:
                     result = {"error": f"Unknown tool: {function_name}"}
 
                 tool_results.append({
-                    "tool_call_id": tool_call.id,
                     "role": "tool",
+                    "type": "tool_response",
+                    "tool_call_id": tool_call.id,
+                    "name": function_name,
                     "content": json.dumps(result)
                 })
 
