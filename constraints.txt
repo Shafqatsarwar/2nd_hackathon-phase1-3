@@ -1,3 +1,0 @@
-# Constraints file to ensure pre-built wheels are used
-pydantic==2.5.3
-pydantic-core==2.18.4  # This version should have pre-built wheels

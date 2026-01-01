@@ -1,12 +1,18 @@
-# 🚀 The Evolution of Todo - Phase II Deployment Guide
+# 🚀 The Evolution of Todo - Complete Deployment Guide (Phases I, II & III)
 
 ## 🌟 Project Overview
 This project represents the evolution of a simple CLI Todo list into a full-stack AI-powered Web Application.
 - **Frontend**: Next.js 16, TailwindCSS, Framer Motion (Glassmorphic UI)
 - **Backend**: FastAPI, SQLModel, Neon (PostgreSQL)
 - **Auth**: Better Auth (Secure, Self-hosted logic)
+- **AI**: OpenAI Agents with MCP (Model Context Protocol) server architecture (Phase III)
 
 ---
+
+## 📋 Phase Overview
+- **Phase I**: In-Memory Python Console App
+- **Phase II**: Full-Stack Web Application with persistent storage and authentication
+- **Phase III**: AI-Powered Chatbot with natural language processing
 
 ## 🛠️ Quick Start (Development)
 
@@ -28,8 +34,16 @@ npm run dev
 *   **App**: Open `http://localhost:3000`
 *   **Note**: The root `npm run dev` now automatically starts the frontend from its subdirectory. It connects to the backend on port 800.
 
+### 3. Phase III - AI Chatbot Setup
+The AI-powered chatbot is now integrated into the application.
+*   **Chat Interface**: Navigate to `http://localhost:3000/chat`
+*   **Environment**: Ensure `OPENAI_API_KEY` is set in your `.env.local` file
+*   **Features**: Natural language task management with OpenAI GPT integration
+*   **Status**: The backend ships with a stubbed MCP server so the UI remains responsive while we finalize the official `modelcontextprotocol` 1.0+ tooling. Run `uv lock` / `uv sync` to pick up the dependency updates (`modelcontextprotocol>=1.0.1`) before deploying to Vercel.
+
 ---
-### 3. 🔐 Master Admin Access (Bypass Login)
+
+### 4. 🔐 Master Admin Access (Bypass Login)
 For development and demonstration purposes, we have a built-in Master Admin Access.
 
 *   **Master Token**: `admin_token`
@@ -88,7 +102,17 @@ This section explains every key you need, why you need it, and where to get it.
 *   **Local**: `http://localhost:3000`
 *   **Vercel**: `https://your-app-name.vercel.app`
 
+### 5. `OPENAI_API_KEY` (The AI Engine) - Phase III
+*   **What it is**: Your OpenAI API key for the AI-powered chatbot functionality.
+*   **How to get it**:
+    1. Go to [OpenAI Platform](https://platform.openai.com/)
+    2. Navigate to "API Keys" section
+    3. Create a new secret key
+    4. Copy the key (format: `sk-...`)
+*   **Security**: Never commit this key to version control. It's already in `.gitignore`.
+
 ---
+
 
 ## 📝 Configuration Cheatsheet
 
@@ -98,6 +122,7 @@ DATABASE_URL="sqlite:///todo.db"
 BETTER_AUTH_SECRET="local_dev_secret"
 NEXT_PUBLIC_BACKEND_URL="http://127.0.0.1:800"
 NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
+OPENAI_API_KEY="sk-...your-openai-api-key-here..."
 ```
 
 **Scenario B: Deploying to Vercel (Add to Vercel Env Vars)**
@@ -106,6 +131,7 @@ DATABASE_URL="postgresql://neondb_owner:..." (From Neon)
 BETTER_AUTH_SECRET="complex_random_string"
 NEXT_PUBLIC_BACKEND_URL="https://your-app.vercel.app"
 NEXT_PUBLIC_BETTER_AUTH_URL="https://your-app.vercel.app"
+OPENAI_API_KEY="sk-...your-openai-api-key-here..." (For Phase III AI Chatbot)
 ```
 
 ---
@@ -261,6 +287,12 @@ npm start
 - Ensure using Neon's **Pooled** connection string (not Direct)
 - Verify `sslmode=require` is in the connection string
 - Check Neon database is not paused/suspended
+
+**Phase III AI Chatbot Issues**:
+- Verify `OPENAI_API_KEY` is correctly set in environment variables
+- Check that your OpenAI account has sufficient credits
+- Ensure the chat endpoint `/api/{user_id}/chat` is accessible
+- Confirm that MCP server dependencies are properly installed
 
 ### 🔐 Master Admin Access (Bypass Login)
 For development and demonstration purposes, we have a built-in Master Admin Access.

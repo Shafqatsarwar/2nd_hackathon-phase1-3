@@ -32,6 +32,13 @@ export default function Home() {
                     >
                         Dashboard
                     </Link>
+
+                    <Link
+                        href="/chat"
+                        className="px-8 py-4 border border-purple-500/50 text-purple-300 font-bold rounded-2xl hover:bg-purple-500/10 active:scale-95 transition-all"
+                    >
+                        AI Chat
+                    </Link>
                 </div>
 
                 <div className="mt-20 flex gap-8 justify-center opacity-40">

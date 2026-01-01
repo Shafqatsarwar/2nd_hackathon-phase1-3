@@ -1,6 +1,6 @@
 # The Evolution of Todo
 
-This project documents the journey of a Todo application from a simple local CLI to a cloud-native, full-stack web system with AI capabilities. This is a **Product Architect** demonstration built strictly using Agentic Dev Stack principles.
+This project documents the complete evolution of a Todo application from a simple local CLI to a cloud-native, full-stack web system with AI capabilities. This **Product Architect** demonstration showcases three complete phases built strictly using Agentic Dev Stack principles.
 
 ## 📜 Constitution & Rules
 All development is governed by the [Constitution](./constitution.md) and tracked in the `.specify/memory/` folder.
@@ -25,12 +25,13 @@ A multi-user system with persistent storage (Neon PostgreSQL) and JWT Authentica
 - **Deployment**: Unified Vercel deployment (frontend + backend combined).
 - **Setup**: See [guide.md](./guide.md) for detailed instructions.
 
-### Phase III: AI-Powered Todo Chatbot (Planned)
+### Phase III: AI-Powered Todo Chatbot (In Progress)
 An AI chatbot interface using OpenAI Agents SDK and MCP (Model Context Protocol) server architecture.
-- **Frontend**: OpenAI ChatKit
-- **Backend**: Python FastAPI + OpenAI Agents SDK
-- **MCP Server**: Official MCP SDK for task operations
-- **Specifications**: See `specs/phase-iii-ai-chatbot/`
+- **Frontend**: OpenAI ChatKit with beautiful chat interface at `/chat`.
+- **Backend**: Python FastAPI + OpenAI Agents SDK with MCP tools (currently relying on a placeholder MCP layer for compatibility).
+- **MCP Server**: Lightweight stub that mirrors the expected `modelcontextprotocol` 1.0+ API until the official SDK can be wired in.
+- **Features**: Natural language task management (add, list, complete, delete, update); the chat UI already forwards requests to `/api/{user_id}/chat`, but the agent tooling still awaits the upstream MCP server integration.
+- **State**: Use the `guest_token`, `admin_token`, or a Better Auth-issued JWT via `/auth` when exercising `/api/{user_id}` routes in Swagger. Refer to `guide.md` for deployment steps and `history/prompts/phase-iii` for the latest spec-driven updates.
 
 ### Intermediate & Advanced Features (Planned)
 - **Intermediate**: Priorities, Tags, Search, Filter, Sort (see `specs/intermediate-features/`)
@@ -109,6 +110,7 @@ See [VERCEL_DEPLOYMENT_CHECKLIST.md](./VERCEL_DEPLOYMENT_CHECKLIST.md) for a com
    - `BETTER_AUTH_SECRET`: 32+ character random string
    - `NEXT_PUBLIC_BACKEND_URL`: `https://your-app.vercel.app` (rewrites add `/api`, so including `/api` is optional)
    - `NEXT_PUBLIC_BETTER_AUTH_URL`: `https://your-app.vercel.app`
+   - `OPENAI_API_KEY`: OpenAI API key for Phase III AI chatbot functionality
 
 4. **Verify Deployment**:
    - Frontend: `https://your-app-name.vercel.app`

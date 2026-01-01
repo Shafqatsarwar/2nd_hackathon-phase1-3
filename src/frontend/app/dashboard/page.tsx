@@ -36,7 +36,7 @@ export default function DashboardPage() {
             setLoading(false);
         }
         init();
-    }, []);
+    }, [router]);
 
     const handleLogout = async () => {
         localStorage.removeItem("admin_access");
@@ -82,6 +82,23 @@ export default function DashboardPage() {
                         <SignOutButton />
                     </div>
                 </header>
+
+                <div className="mb-8">
+                    <div className="flex space-x-4 overflow-x-auto pb-2">
+                        <Link
+                            href="/dashboard"
+                            className="px-4 py-2 rounded-lg bg-purple-600/20 border border-purple-500/30 text-purple-300 whitespace-nowrap"
+                        >
+                            Tasks
+                        </Link>
+                        <Link
+                            href="/chat"
+                            className="px-4 py-2 rounded-lg border border-white/10 text-slate-300 hover:bg-white/5 whitespace-nowrap"
+                        >
+                            AI Chat
+                        </Link>
+                    </div>
+                </div>
 
                 <div className="grid grid-cols-1 gap-12">
                     <section className="relative">

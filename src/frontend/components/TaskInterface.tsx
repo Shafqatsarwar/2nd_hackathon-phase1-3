@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { fetcher } from "../utils/fetcher";
 
@@ -22,11 +22,7 @@ export default function TaskInterface({ userId, token, title = "Evolution Task M
     const [newTitle, setNewTitle] = useState("");
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchTasks();
-    }, [userId, token]);
-
-    const fetchTasks = async () => {
+    const fetchTasks = useCallback(async () => {
         try {
             const url = `/api/${userId}/tasks`;
             console.log("Fetching tasks from:", url); // Diagnostic
@@ -37,7 +33,11 @@ export default function TaskInterface({ userId, token, title = "Evolution Task M
         } finally {
             setLoading(false);
         }
-    };
+    }, [userId, token]);
+
+    useEffect(() => {
+        fetchTasks();
+    }, [fetchTasks]);
 
     const addTask = async () => {
         if (!newTitle) return;

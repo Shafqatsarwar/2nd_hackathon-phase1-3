@@ -7,15 +7,60 @@ root = Path(__file__).parent.parent.parent
 if str(root) not in sys.path:
     sys.path.append(str(root))
 
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Path
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.utils import get_openapi
 from sqlmodel import Session, select
-from typing import List
+from typing import List, Dict, Any
+from pydantic import BaseModel
 from src.backend.database import create_db_and_tables, get_session, engine
 from src.backend.models import Task, TaskCreate, TaskUpdate, User
 from src.backend.auth_utils import verify_jwt
 
 app = FastAPI(title="The Evolution of Todo - Phase II")
+
+
+class RootResponse(BaseModel):
+    message: str
+    status: str
+
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "message": "Welcome to Phase II Backend",
+                "status": "Ready"
+            }
+        }
+    }
+
+
+def custom_openapi() -> Dict[str, Any]:
+    if app.openapi_schema:
+        return app.openapi_schema
+
+    schema = get_openapi(
+        title=app.title,
+        version="1.0.0",
+        description="FastAPI Phase II backend for The Evolution of Todo",
+        routes=app.routes,
+    )
+
+    security_schemes = schema.setdefault("components", {}).setdefault("securitySchemes", {})
+    bearer = security_schemes.setdefault("bearerAuth", {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": (
+            "Supply a Better Auth JWT (prefixed with `Bearer `) "
+            "or use the demo tokens: `guest_token` or `admin_token`."
+        )
+    })
+    schema["components"]["securitySchemes"]["bearerAuth"] = bearer
+    app.openapi_schema = schema
+    return schema
+
+
+app.openapi = custom_openapi
 
 @app.on_event("startup")
 def on_startup():
@@ -40,15 +85,43 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
+@app.get("/", response_model=RootResponse)
 def read_root():
-    return {"message": "Welcome to Phase II Backend", "status": "Ready"}
+    return RootResponse(message="Welcome to Phase II Backend", status="Ready")
 
 # --- TASK CRUD ENDPOINTS ---
 
-@app.get("/api/{user_id}/tasks", response_model=List[Task])
+@app.get(
+    "/api/{user_id}/tasks",
+    response_model=List[Task],
+    responses={
+        200: {
+            "description": "List of tasks owned by the user",
+            "content": {
+                "application/json": {
+                    "example": [
+                        {
+                            "id": 1,
+                            "title": "Sync with Phase III",
+                            "description": "Ensure the chat agent picks up new MCP tools.",
+                            "completed": False,
+                            "user_id": "admin"
+                        },
+                        {
+                            "id": 2,
+                            "title": "Finalize Better Auth",
+                            "description": "Deploy backend + frontend secrets to Vercel.",
+                            "completed": True,
+                            "user_id": "admin"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+)
 def list_tasks(
-    user_id: str, 
+    user_id: str = Path(..., example="admin", description="Better Auth user ID (stored in JWT `sub`)"),
     token_user_id: str = Depends(verify_jwt),
     session: Session = Depends(get_session)
 ):
@@ -176,7 +249,7 @@ def health_check(session: Session = Depends(get_session)):
 
 # --- AGENT ENDPOINTS (PHASE III) ---
 from src.backend.agents.orchestrator import orchestrator
-from pydantic import BaseModel
+
 
 class AgentRequest(BaseModel):
     query: str = "Fix the login bug asap"
@@ -201,5 +274,10 @@ def consult_agent(request: AgentRequest):
     return orchestrator.delegate(request.query, request.context)
 
 # --- MCP CHAT ENDPOINT (PHASE III) ---
-from src.backend.mcp_server.chat_endpoint import router as chat_router
-app.include_router(chat_router)
+# Conditionally include the chat router to avoid breaking Phase II
+try:
+    from src.backend.mcp_server.chat_endpoint import router as chat_router
+    app.include_router(chat_router)
+except ImportError as exc:
+    print(f"Warning: Could not import chat router: {exc}")
+    print("Phase III features will not be available until MCP dependencies are properly configured")

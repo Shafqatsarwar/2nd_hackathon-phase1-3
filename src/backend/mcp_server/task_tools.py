@@ -1,6 +1,6 @@
 from typing import List, Dict, Any
 from sqlmodel import Session, select
-from src.backend.models import Task, TaskCreate, TaskUpdate
+from ..models import Task, TaskCreate, TaskUpdate
 
 
 class MCPTaskTools:
