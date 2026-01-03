@@ -2,14 +2,18 @@ from typing import Dict, Any, List
 from openai import OpenAI
 import json
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from .task_tools import MCPTaskTools
 from .web_search import search_web
 from ..database import get_session
 from sqlmodel import Session
 
-# Load environment variables (works locally, no-op on Vercel where env vars are injected)
-load_dotenv(".env.backend", override=True)
+# Load environment variables only if .env.backend exists (local dev)
+# On Vercel, environment variables are injected directly by the platform
+env_file = Path(__file__).parent.parent / ".env.backend"
+if env_file.exists():
+    load_dotenv(env_file, override=True)
 
 
 class TodoOpenAIAgent:
