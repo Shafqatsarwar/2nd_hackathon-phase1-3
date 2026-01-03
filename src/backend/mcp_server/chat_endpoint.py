@@ -145,7 +145,15 @@ async def process_natural_language_command(user_id: str, message: str, session: 
         agent = TodoOpenAIAgent()
         response = agent.process_message(user_id, message, session)
         return response
+    except ValueError as e:
+        # Environment variable not set
+        error_msg = str(e)
+        print(f"Configuration error: {error_msg}")
+        return f"Configuration error: {error_msg}"
     except Exception as e:
         # Fallback to a simple rule-based processor if OpenAI integration fails
+        import traceback
+        error_details = traceback.format_exc()
         print(f"OpenAI agent error: {e}")
-        return f"I encountered an issue processing your request: {str(e)}. Please try again later."
+        print(f"Full traceback:\n{error_details}")
+        return f"I encountered an issue processing your request: {str(e)}. Please check the server logs for details."

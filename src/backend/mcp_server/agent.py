@@ -2,10 +2,14 @@ from typing import Dict, Any, List
 from openai import OpenAI
 import json
 import os
+from dotenv import load_dotenv
 from .task_tools import MCPTaskTools
 from .web_search import search_web
 from ..database import get_session
 from sqlmodel import Session
+
+# Load environment variables (works locally, no-op on Vercel where env vars are injected)
+load_dotenv(".env.backend", override=True)
 
 
 class TodoOpenAIAgent:
@@ -14,7 +18,13 @@ class TodoOpenAIAgent:
     """
 
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            raise ValueError(
+                "OPENAI_API_KEY environment variable is not set. "
+                "Please add it to your Vercel environment variables or .env.backend file."
+            )
+        self.client = OpenAI(api_key=api_key)
         self.task_tools = MCPTaskTools(get_session)
 
         # Define the tools that the agent can use
@@ -142,6 +152,10 @@ class TodoOpenAIAgent:
                     "Do NOT include filler words like 'what about', 'how to', 'next month', or conversational phrasing. "
                     "Example: for 'buy solar system in pakistan next month', search for 'solar system prices pakistan'. "
                     "Keep web search answers concise (approx 10-30 words). "
+                    "\n\n"
+                    "CONTEXT AWARENESS: If the user refers to 'it', 'that task', or uses follow-up commands like 'make it recurring' or 'repeat every month', "
+                    "first use 'list_tasks' to see their recent tasks, then identify the most recently added task and update it accordingly. "
+                    "For example, if they say 'repeat every month' right after adding a task, use 'update_task' on the most recent task with is_recurring=true and recurrence_interval='monthly'. "
                     f"The current user ID is: {user_id}"
                 )
             },
