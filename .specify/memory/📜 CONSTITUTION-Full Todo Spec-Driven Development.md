@@ -82,7 +82,7 @@ UV for Python dependency management
 
 Frontend
 
-Next.js ≥ 16 (App Router)
+Next.js ≥ 15 (App Router)
 
 React ≥ 19
 

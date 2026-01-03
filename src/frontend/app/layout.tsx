@@ -3,8 +3,8 @@ import "./globals.css";
 import GuestButton from "../components/GuestButton";
 
 export const metadata: Metadata = {
-    title: "The Evolution of Todo - Phase II",
-    description: "Next.js + FastAPI Todo App",
+    title: "The Evolution of Todo - AI-Powered Vault",
+    description: "Next.js + FastAPI + AI Todo Ecosystem",
 };
 
 export default function RootLayout({

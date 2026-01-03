@@ -2,7 +2,7 @@
 
 ## 🌟 Project Overview
 This project represents the evolution of a simple CLI Todo list into a full-stack AI-powered Web Application.
-- **Frontend**: Next.js 16, TailwindCSS, Framer Motion (Glassmorphic UI)
+- **Frontend**: Next.js 15, TailwindCSS, Framer Motion (Glassmorphic UI)
 - **Backend**: FastAPI, SQLModel, Neon (PostgreSQL)
 - **Auth**: Better Auth (Secure, Self-hosted logic)
 - **AI**: OpenAI Agents with MCP (Model Context Protocol) server architecture (Phase III)
@@ -44,11 +44,11 @@ npm run dev
 *   **Note**: The root `npm run dev` now automatically starts the frontend from its subdirectory. It connects to the backend on port 800.
 
 ### 3. Phase III - AI Chatbot Setup
-The AI-powered chatbot is now integrated into the application.
+The AI-powered chatbot is fully integrated and functional.
 *   **Chat Interface**: Navigate to `http://localhost:3000/chat`
-*   **Environment**: Ensure `OPENAI_API_KEY` is set in your `.env.local` file
-*   **Features**: Natural language task management with OpenAI GPT integration
-*   **Status**: The backend ships with a stubbed MCP server so the UI remains responsive while we finalize the official `modelcontextprotocol` 1.0+ tooling. Run `uv lock` / `uv sync` to pick up the dependency updates (`modelcontextprotocol>=1.0.1`) before deploying to Vercel.
+*   **Environment**: Ensure `OPENAI_API_KEY` is set in your `.env.local` or `.env.vercel` file.
+*   **Features**: Natural language task management with OpenAI GPT integration.
+*   **Status**: The backend implementation provides a robust MCP tool layer for the AI agent to manage your tasks effectively.
 
 ---
 

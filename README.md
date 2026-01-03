@@ -21,17 +21,17 @@ A command-line tool for managing tasks in local memory.
 ### Phase II: Full-Stack Web App (FastAPI + Next.js)
 A multi-user system with persistent storage (Neon PostgreSQL) and JWT Authentication (Better Auth).
 - **Backend**: Python FastAPI + SQLModel (Port 800).
-- **Frontend**: Next.js 16+ (App Router, Port 3000).
+- **Frontend**: Next.js 15+ (App Router, Port 3000).
 - **Deployment**: Unified Vercel deployment (frontend + backend combined).
 - **Setup**: See [guide.md](./guide.md) for detailed instructions.
 
-### Phase III: AI-Powered Todo Chatbot (In Progress)
+### Phase III: AI-Powered Todo Chatbot (Completed)
 An AI chatbot interface using OpenAI Agents SDK and MCP (Model Context Protocol) server architecture.
-- **Frontend**: OpenAI ChatKit with beautiful chat interface at `/chat`.
-- **Backend**: Python FastAPI + OpenAI Agents SDK with MCP tools (currently relying on a placeholder MCP layer for compatibility).
-- **MCP Server**: Lightweight stub that mirrors the expected `modelcontextprotocol` 1.0+ API until the official SDK can be wired in.
-- **Features**: Natural language task management (add, list, complete, delete, update); the chat UI already forwards requests to `/api/{user_id}/chat`, but the agent tooling still awaits the upstream MCP server integration.
-- **State**: Use the `guest_token`, `admin_token`, or a Better Auth-issued JWT via `/auth` when exercising `/api/{user_id}` routes in Swagger. Refer to `guide.md` for deployment steps and `history/prompts/phase-iii` for the latest spec-driven updates.
+- **Frontend**: OpenAI ChatKit style beautiful chat interface at `/chat`.
+- **Backend**: Python FastAPI + OpenAI Agents SDK with MCP tools.
+- **MCP Server**: Lightweight implementation that provides task management tools to the AI agent.
+- **Features**: Natural language task management (add, list, complete, delete, update); conversational persistence in database.
+- **State**: Use the `guest_token`, `admin_token`, or a Better Auth-issued JWT via `/auth` when exercising `/api/{user_id}` routes. Refer to `guide.md` for deployment steps.
 
 ### Intermediate & Advanced Features (Planned)
 - **Intermediate**: Priorities, Tags, Search, Filter, Sort (see `specs/intermediate-features/`)

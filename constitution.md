@@ -49,7 +49,7 @@ This project simulates the real-world evolution of software, starting from a sim
 - **Authentication**: User signup/signin using Better Auth (JWT-based).
 
 ### Technology Stack (Phase II)
-- **Frontend**: Next.js 16+ (App Router)
+- **Frontend**: Next.js 15+ (App Router)
 - **Backend**: Python FastAPI
 - **ORM**: SQLModel
 - **Database**: Neon Serverless PostgreSQL
@@ -85,7 +85,7 @@ Windows users MUST use WSL 2 (Ubuntu 22.04) for consistency.
 - **Authentication**: User isolation using existing Better Auth JWT tokens
 
 ### Technology Stack (Phase III)
-- **Frontend**: Next.js 16+ with OpenAI ChatKit
+- **Frontend**: Next.js 15+ with OpenAI ChatKit
 - **Backend**: Python FastAPI + OpenAI Agents SDK + Official MCP SDK
 - **ORM**: SQLModel
 - **Database**: Neon Serverless PostgreSQL
