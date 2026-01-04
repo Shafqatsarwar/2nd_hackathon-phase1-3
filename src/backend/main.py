@@ -261,6 +261,39 @@ def health_check(session: Session = Depends(get_session)):
     except Exception as e:
         return {"status": "unhealthy", "database": str(e)}
 
+@app.get("/health/openai")
+def openai_health_check():
+    """
+    Diagnostic endpoint to check if OpenAI client can be initialized.
+    This helps debug Vercel deployment issues.
+    """
+    import os
+    try:
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            return {
+                "status": "error",
+                "message": "OPENAI_API_KEY environment variable is not set",
+                "env_vars_present": list(os.environ.keys())[:10]  # Show first 10 env vars for debugging
+            }
+        
+        # Try to initialize OpenAI client
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        
+        return {
+            "status": "healthy",
+            "message": "OpenAI client initialized successfully",
+            "api_key_prefix": api_key[:10] + "..." if len(api_key) > 10 else "too_short"
+        }
+    except Exception as e:
+        import traceback
+        return {
+            "status": "error",
+            "message": str(e),
+            "traceback": traceback.format_exc()
+        }
+
 # --- AGENT ENDPOINTS (PHASE III) ---
 from src.backend.agents.orchestrator import orchestrator
 
@@ -288,10 +321,6 @@ def consult_agent(request: AgentRequest):
     return orchestrator.delegate(request.query, request.context)
 
 # --- MCP CHAT ENDPOINT (PHASE III) ---
-# Conditionally include the chat router to avoid breaking Phase II
-try:
-    from src.backend.mcp_server.chat_endpoint import router as chat_router
-    app.include_router(chat_router)
-except ImportError as exc:
-    print(f"Warning: Could not import chat router: {exc}")
-    print("Phase III features will not be available until MCP dependencies are properly configured")
+from src.backend.mcp_server.chat_endpoint import router as chat_router
+app.include_router(chat_router)
+print("✅ Chat router successfully included")
