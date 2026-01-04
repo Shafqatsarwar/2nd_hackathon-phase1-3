@@ -2,8 +2,11 @@ import sys
 import os
 from pathlib import Path
 
-# Add the backend directory to sys.path
+# Add the project root and backend directory to sys.path
 root_dir = Path(__file__).parent.parent
+if str(root_dir) not in sys.path:
+    sys.path.append(str(root_dir))
+
 backend_dir = str(root_dir / "src" / "backend")
 if backend_dir not in sys.path:
     sys.path.append(backend_dir)
